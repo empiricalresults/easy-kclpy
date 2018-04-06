@@ -23,7 +23,7 @@ Here's an example of launching an example kinesis worker that dumps the stream t
 First configure the environment variables.  
 ```
 export APPLICATION_NAME="LocalFileWriter"
-export EXECUTABLE_NAME="python3 utils/kinesis_to_file_processor.py"
+export EXECUTABLE_NAME="python3 easy_kclpy/utils/kinesis_to_file_processor.py"
 export STREAM_NAME=[your-kinesis-stream]
 ```
 
