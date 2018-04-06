@@ -7,7 +7,6 @@ The package can be installed with pip like any other package.  Here is a summary
 First create a virtual environment
 ```
 pip3 install virtualenv
-cd /local/path/to/haro_ai (not /local/path/to/haro_ai/haro_ai)
 virtualenv -p python3 venv
 . venv/bin/activate
 ```
