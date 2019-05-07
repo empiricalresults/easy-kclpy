@@ -20,7 +20,7 @@ from setuptools import find_packages
 PACKAGE_NAME = 'easy-kclpy'
 PACKAGE_VERSION = '0.1.0'
 
-if __name__ == '__main__':
+if __name__ in ('__main__', 'builtins'):
     setup(
         name=PACKAGE_NAME,
         version=PACKAGE_VERSION,
