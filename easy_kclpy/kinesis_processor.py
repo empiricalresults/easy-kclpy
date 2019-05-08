@@ -66,7 +66,7 @@ class PerRecordProcessorBase(processor.RecordProcessorBase):
                 if self.should_checkpoint():
                     self.checkpoint(process_records_input.checkpointer, seq, sub_seq)
         except Exception as e:
-            log.error("Encountered an exception while processing records. Exception was {e}".format(e=e))
+            log.exception("Encountered an exception while processing records. Exception was {e}".format(e=e))
 
     def checkpoint(self, checkpointer, sequence_number=None, sub_sequence_number=None):
         """

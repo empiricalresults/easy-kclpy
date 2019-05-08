@@ -4,17 +4,22 @@ A simpler class interface and launch utils for processing kinesis streams with t
 ## Installing the package
 The package can be installed with pip like any other package.  Here is a summary for installing it with python3.
 
-First create a virtual environment
 ```
-pip3 install virtualenv
-virtualenv -p python3 venv
-. venv/bin/activate
+> python3 -m venv venv
+> . venv/bin/activate
+> pip3 install --upgrade pip
+> pip3 install -r requirements.txt
+> python setup.py develop
 ```
-Then install the package
-```
-pip3 install --upgrade pip
-pip3 install --editable . --process-dependency-links
-```
+
+
+## How to make a Release
+
+1. Update the version in setup.py, commit to master.
+2. Locally, build a source distribution: 
+
+    python setup.py sdist
+
 
 ## Running the example
 
