@@ -18,7 +18,7 @@ from distutils.core import setup
 from setuptools import find_packages
 
 PACKAGE_NAME = 'easy-kclpy'
-PACKAGE_VERSION = '0.1.0'
+PACKAGE_VERSION = '0.1.1'
 
 if __name__ in ('__main__', 'builtins'):
     setup(
@@ -28,7 +28,7 @@ if __name__ in ('__main__', 'builtins'):
         license='Amazon Software License',
         packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
         install_requires=[
-            "amazon_kclpy==1.4.5"
+            "amazon_kclpy==2.0.1"
         ],
         author='david-matheson',
         author_email='david@empiricalresults.com',
@@ -37,6 +37,6 @@ if __name__ in ('__main__', 'builtins'):
         keywords=['amazon', 'kinesis', 'kinesis-client-library', 'client-library', 'library'],
         classifiers=[
             "Programming Language :: Python :: 2.7",
-            "Programming Language :: Python :: 3.5",
+            "Programming Language :: Python :: 3",
         ]
     )

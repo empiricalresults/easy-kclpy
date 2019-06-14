@@ -4,8 +4,6 @@
 #
 #    pip-compile 
 #
-amazon_kclpy==1.4.5
+amazon_kclpy==2.0.1
 argparse==1.4.0           # via amazon-kclpy
 boto==2.49.0              # via amazon-kclpy
-mock==3.0.5               # via amazon-kclpy
-six==1.12.0               # via mock
