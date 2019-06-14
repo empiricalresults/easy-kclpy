@@ -45,7 +45,6 @@ def generate_kcl_properties_file_from_env(filename):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("A script for generating a command to run an Amazon KCLpy app")
 
-
     parser.add_argument("-p", "--properties", "--props", "--prop", dest="properties",
                         help="The path to a properties file (relative to where you are running this script)",
                         metavar="PATH_TO_PROPERTIES")

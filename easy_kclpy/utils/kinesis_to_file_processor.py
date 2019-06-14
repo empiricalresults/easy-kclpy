@@ -16,6 +16,7 @@ class KinesisToFileProcessor(PerRecordProcessorBase):
         """
         super(KinesisToFileProcessor, self).__init__(**kwargs)
         self.filename_prefix = filename_prefix
+        self.file = None
 
     def initialize(self, initialize_input):
         super(KinesisToFileProcessor, self).initialize(initialize_input)
