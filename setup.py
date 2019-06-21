@@ -18,17 +18,18 @@ from distutils.core import setup
 from setuptools import find_packages
 
 PACKAGE_NAME = 'easy-kclpy'
-PACKAGE_VERSION = '0.1.1'
+PACKAGE_VERSION = '0.1.2'
 
 if __name__ in ('__main__', 'builtins'):
     setup(
         name=PACKAGE_NAME,
         version=PACKAGE_VERSION,
-        description='A simpler class interface and launch utils for processing kinesis streams with the Amazon Kinesis Client Library MultiLangDaemon',
+        description='A simpler class interface and launch utils for processing kinesis '
+                    'streams with the Amazon Kinesis Client Library MultiLangDaemon',
         license='Amazon Software License',
         packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
         install_requires=[
-            "amazon_kclpy==2.0.1"
+            "amazon_kclpy==1.5.1"
         ],
         author='david-matheson',
         author_email='david@empiricalresults.com',
