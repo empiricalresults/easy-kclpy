@@ -18,7 +18,7 @@ from distutils.core import setup
 from setuptools import find_packages
 
 PACKAGE_NAME = 'easy-kclpy'
-PACKAGE_VERSION = '0.1.2'
+PACKAGE_VERSION = '0.1.3'
 
 if __name__ in ('__main__', 'builtins'):
     setup(

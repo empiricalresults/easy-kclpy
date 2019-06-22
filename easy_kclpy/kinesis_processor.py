@@ -101,7 +101,7 @@ class PerRecordProcessorBase(processor.RecordProcessorBase):
                         log.error('Failed to checkpoint after {n} attempts, giving up.'.format(n=n))
                         return
                     else:
-                        log.error('Was throttled while checkpointing, will attempt again in {s} seconds'
+                        log.warning('Was throttled while checkpointing, will attempt again in {s} seconds'
                                   .format(s=self.checkpoint_error_sleep_seconds))
                 elif 'InvalidStateException' == e.value:
                     log.error('MultiLangDaemon reported an invalid state while checkpointing.')
