@@ -18,7 +18,7 @@ from distutils.core import setup
 from setuptools import find_packages
 
 PACKAGE_NAME = 'easy-kclpy'
-PACKAGE_VERSION = '2019.8.27.haro.543'
+PACKAGE_VERSION = '2019.8.28.haro.543'
 
 if __name__ in ('__main__', 'builtins'):
     setup(

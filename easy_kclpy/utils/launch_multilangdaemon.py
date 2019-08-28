@@ -4,6 +4,7 @@
 
 from __future__ import print_function
 
+import logging
 import subprocess
 
 from amazon_kclpy import kcl
@@ -14,6 +15,7 @@ import sys
 
 from easy_kclpy.utils.generate_kcl_properties_file_from_env import generate_kcl_properties_file_from_env
 
+log = logging.getLogger(__name__)
 
 def get_dir_of_file(f):
     '''
@@ -146,5 +148,5 @@ if __name__ == '__main__':
         if not args.print_only:
             subprocess.call(kcl_app_command.split(' '))
     else:
-        sys.stderr.write("Must provide arguments: --java and --properties\n")
+        log.error("Must provide arguments: --java and --properties")
         parser.print_usage()

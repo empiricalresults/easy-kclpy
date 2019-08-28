@@ -126,7 +126,7 @@ class PerRecordProcessorBase(processor.RecordProcessorBase):
                     self._largest_seq = (seq, sub_seq)
 
             except Exception as e:
-                log.exception("Encountered an exception while processing record: {e}".format(e=e))
+                log.exception("Encountered an exception while processing record - skipping the record: {e}".format(e=e))
 
         if self.should_checkpoint():
             self.checkpoint(process_records_input.checkpointer, str(self._largest_seq[0]), self._largest_seq[1])
