@@ -12,7 +12,7 @@ def generate_kcl_properties_file_from_env(filename):
     # start with default vars
     vars = {
         'AWSCredentialsProvider': 'DefaultAWSCredentialsProviderChain',
-        'processingLanguage': 'python/3.5',
+        'processingLanguage': 'python/3',
         'validateSequenceNumberBeforeCheckpointing': 'true',
         'initialPositionInStream': 'TRIM_HORIZON'
     }
