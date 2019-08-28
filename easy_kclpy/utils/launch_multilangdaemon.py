@@ -138,7 +138,7 @@ if __name__ == '__main__':
     if args.java and args.properties:
         multi_lang_daemon_class = 'software.amazon.kinesis.multilang.MultiLangDaemon'
         properties_argument = "--properties-file {props}".format(props=args.properties)
-        log_argument = ''
+        log_argument = 'log.properties'
         if args.log_configuration is not None:
             log_argument = "--log-configuration {log}".format(log=args.log_configuration)
 
