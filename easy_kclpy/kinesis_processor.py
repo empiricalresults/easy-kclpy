@@ -45,7 +45,7 @@ class PerRecordProcessorBase(processor.RecordProcessorBase):
         :param str or None sequence_number: the sequence number to checkpoint at.
         :param int or None sub_sequence_number: the sub sequence number to checkpoint at.
         """
-        log.info('Checkpointing {}'.format(self.shard_id))
+        log.debug('Checkpointing {}'.format(self.shard_id))
 
         self.before_checkpoint(sequence_number, sub_sequence_number)
 
@@ -132,14 +132,14 @@ class PerRecordProcessorBase(processor.RecordProcessorBase):
             self.checkpoint(process_records_input.checkpointer, str(self._largest_seq[0]), self._largest_seq[1])
 
     def lease_lost(self, lease_lost_input):
-        log.info("Lease has been lost.")
+        log.warning("Lease has been lost.")
 
     def shard_ended(self, shard_ended_input):
-        log.info("Shard has ended. Checkpointing...")
+        log.warning("Shard has ended. Checkpointing...")
         shard_ended_input.checkpointer.checkpoint()
 
     def shutdown_requested(self, shutdown_requested_input):
-        log.info("Shutdown has been requested. Checkpointing...")
+        log.warning("Shutdown has been requested. Checkpointing...")
         shutdown_requested_input.checkpointer.checkpoint()
 
     def should_checkpoint(self):
