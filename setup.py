@@ -13,23 +13,24 @@ express or implied. See the License for the specific language governing
 permissions and limitations under the License.
 """
 
-from distutils.core import setup
-
-from setuptools import find_packages
+from setuptools import setup, find_packages
 
 PACKAGE_NAME = 'easy-kclpy'
-PACKAGE_VERSION = '0.1.3'
 
 if __name__ in ('__main__', 'builtins'):
+    __version__ = None
+    exec(open("easy_kclpy/version.py").read())
+    assert __version__
+
     setup(
         name=PACKAGE_NAME,
-        version=PACKAGE_VERSION,
+        version=__version__,
         description='A simpler class interface and launch utils for processing kinesis '
                     'streams with the Amazon Kinesis Client Library MultiLangDaemon',
         license='Amazon Software License',
         packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
         install_requires=[
-            "amazon_kclpy==1.5.1"
+            "amazon-kclpy==2.0.1"
         ],
         author='david-matheson',
         author_email='david@empiricalresults.com',

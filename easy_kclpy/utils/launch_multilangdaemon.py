@@ -1,39 +1,21 @@
 #!/usr/bin/env python
 # Copyright 2014-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-#
-# Licensed under the Amazon Software License (the "License").
-# You may not use this file except in compliance with the License.
-# A copy of the License is located at
-#
-# http://aws.amazon.com/asl/
-#
-# or in the "license" file accompanying this file. This file is distributed
-# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-# express or implied. See the License for the specific language governing
-# permissions and limitations under the License.
-"""
-This script provides two utility functions:
+# SPDX-License-Identifier: Apache-2.0
 
-    ``--print_classpath``
-        which prints a java class path. It optionally takes --properties
-        and any number of --path options. It will generate a java class path which will include
-        the properties file and paths and the location of the KCL jars based on the location of
-        the amazon_kclpy.kcl module.
+from __future__ import print_function
 
-    ``--print_command``
-        which prints a command to run an Amazon KCLpy application. It requires a --java
-        and --properties argument and optionally takes any number of --path arguments to prepend
-        to the classpath that it generates for the command.
-"""
+import logging
+import subprocess
+
+from amazon_kclpy import kcl
+from glob import glob
 import os
 import argparse
 import sys
-import subprocess
 
-from glob import glob
-from amazon_kclpy import kcl
 from easy_kclpy.utils.generate_kcl_properties_file_from_env import generate_kcl_properties_file_from_env
 
+log = logging.getLogger(__name__)
 
 def get_dir_of_file(f):
     '''
@@ -47,6 +29,7 @@ def get_dir_of_file(f):
     '''
     return os.path.dirname(os.path.abspath(f))
 
+
 def get_kcl_dir():
     '''
     Returns the absolute path to the dir containing the amazon_kclpy.kcl module.
@@ -56,6 +39,7 @@ def get_kcl_dir():
     '''
     return get_dir_of_file(kcl.__file__)
 
+
 def get_kcl_jar_path():
     '''
     Returns the absolute path to the KCL jars needed to run an Amazon KCLpy app.
@@ -64,6 +48,7 @@ def get_kcl_jar_path():
     :return: The absolute path of the KCL jar files needed to run the MultiLangDaemon.
     '''
     return ':'.join(glob(os.path.join(get_kcl_dir(), 'jars', '*jar')))
+
 
 def get_kcl_classpath(properties=None, paths=[]):
     '''
@@ -92,7 +77,8 @@ def get_kcl_classpath(properties=None, paths=[]):
         paths.append(dir_of_file)
     return ":".join([p for p in paths if p != ''])
 
-def get_kcl_app_command(java, multi_lang_daemon_class, properties, java_loglevel_properties=None, paths=[]):
+
+def get_kcl_app_command(java, multi_lang_daemon_class, properties, log_configuration, paths=[]):
     '''
     Generates a command to run the MultiLangDaemon.
 
@@ -111,14 +97,13 @@ def get_kcl_app_command(java, multi_lang_daemon_class, properties, java_loglevel
     :rtype: str
     :return: A command that will run the MultiLangDaemon with your properties and custom paths and java.
     '''
-    ll = '-Djava.util.logging.config.file={} '.format(java_loglevel_properties) if java_loglevel_properties else ''
-    return "{java} -cp {cp} {ll}{daemon} {props}".format(java=java,
-                                    cp = get_kcl_classpath(properties, paths),
-                                    ll=ll,
-                                    daemon = multi_lang_daemon_class,
-                                    # Just need the basename becasue the path is added to the classpath
-                                    props = os.path.basename(properties))
-
+    return "{java} -cp {cp} {daemon} {props} {log_config}".format(
+        java=java,
+        cp=get_kcl_classpath(args.properties, paths),
+        daemon=multi_lang_daemon_class,
+        props=properties,
+        log_config=log_configuration
+    )
 
 
 if __name__ == '__main__':
@@ -130,33 +115,38 @@ if __name__ == '__main__':
     parser.add_argument("-p", "--properties", "--props", "--prop", dest="properties",
                         help="The path to a properties file (relative to where you are running this script)",
                         metavar="PATH_TO_PROPERTIES")
-    parser.add_argument("-l", "--java-loglevel-properties", dest="java_loglevel_properties",
-                        help="Log level properties file for java runner")
-    parser.add_argument("--generate-properties", "--generate-properties", dest="generate_properties",
-                        help="Generate the properties file from environment variables",
-                        action="store_true", default=False)
     parser.add_argument("-c", "--classpath", "--path", dest="paths", action="append", default=[],
                         help="Additional path to add to java class path. May be specified any number of times",
                         metavar="PATH")
+    parser.add_argument("-l", "--log-configuration", dest="log_configuration",
+                        help="This will use the logback.xml which will be used by the KCL to log.",
+                        metavar="PATH_TO_LOG_CONFIGURATION")
+
+    parser.add_argument("--generate-properties", "--generate-properties", dest="generate_properties",
+                        help="Generate the properties file from environment variables",
+                        action="store_true", default=False)
+
     parser.add_argument("--print-only", "--print-only", dest="print_only",
                         help="Only print the command to run",
                         action="store_true", default=False)
-    args = parser.parse_args()
 
+    args = parser.parse_args()
 
     if args.generate_properties:
         generate_kcl_properties_file_from_env(args.properties)
 
     if args.java and args.properties:
-        multi_lang_daemon_class = 'com.amazonaws.services.kinesis.multilang.MultiLangDaemon'
-        kcl_app_command = get_kcl_app_command(args.java, multi_lang_daemon_class, args.properties,
-                                  java_loglevel_properties=args.java_loglevel_properties,
-                                  paths=args.paths)
+        multi_lang_daemon_class = 'software.amazon.kinesis.multilang.MultiLangDaemon'
+        properties_argument = "--properties-file {props}".format(props=args.properties)
+        log_argument = ''
+        if args.log_configuration is not None:
+            log_argument = "--log-configuration {log}".format(log=args.log_configuration)
+
+        kcl_app_command = get_kcl_app_command(
+            args.java, multi_lang_daemon_class, properties_argument, log_argument, paths=args.paths)
         print(kcl_app_command)
         if not args.print_only:
             subprocess.call(kcl_app_command.split(' '))
-
     else:
-        sys.stderr.write("Must provide arguments: --java and --properties\n")
+        log.error("Must provide arguments: --java and --properties")
         parser.print_usage()
-
