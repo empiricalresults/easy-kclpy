@@ -23,7 +23,9 @@ def generate_kcl_properties_file_from_env(filename):
                      'workerId', 'shardSyncIntervalMillis', 'maxRecords', 'idleTimeBetweenReadsInMillis',
                      'callProcessRecordsEvenForEmptyRecordList', 'parentShardPollIntervalMillis',
                      'cleanupLeasesUponShardCompletion', 'taskBackoffTimeMillis', 'metricsBufferTimeMillis',
-                     'metricsMaxQueueSize', 'validateSequenceNumberBeforeCheckpointing', 'maxActiveThreads')
+                     'metricsMaxQueueSize', 'validateSequenceNumberBeforeCheckpointing', 'maxActiveThreads',
+                     'shardConsumerDispatchPollIntervalMillis',
+                     )
     raw_env_vars = set()
     for k, v in os.environ.items():
         var = env_to_config_case(k)
