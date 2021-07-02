@@ -30,7 +30,7 @@ if __name__ in ('__main__', 'builtins'):
         license='Amazon Software License',
         packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
         install_requires=[
-            "amazon-kclpy==2.0.1"
+            "amazon-kclpy==2.0.2"
         ],
         author='david-matheson',
         author_email='david@empiricalresults.com',
